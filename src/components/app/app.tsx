@@ -2,13 +2,11 @@ import React,{useState, useRef} from 'react';
 import './app.css';
 import ICoord from "../../types/coord";
 import LeftPanel from "../left-panel";
+import noOp from "../../noop";
 
-function noOp(e: Event) {
-    e.stopPropagation();
-    e.preventDefault();
-}
 
 const App = () =>{
+
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
   const [startWidth, setStartWidth] = useState<number|undefined>(undefined);
@@ -20,7 +18,8 @@ const App = () =>{
   const getMousePos = (x:number, y: number) => {
     const pos: ICoord = {x,y};
     return pos;
-  }
+  };
+
   const startDrag = (pos: ICoord) => {
     let w=10;
     let trn="none";
@@ -45,9 +44,10 @@ const App = () =>{
     setStartWidth(undefined);
     setStartDragX(undefined);
     return false;
-  }
+  };
 
   const dragging = (pos: ICoord) => {
+    console.log(`dragging`)
      let w = width;
      if(startWidth && startDragX!==undefined) {
        const delta = pos.x - startDragX;
@@ -55,7 +55,7 @@ const App = () =>{
        console.log(`dragging x = ${pos.x} delta = ${delta} w=${w} prevwidth=${ref2.current?.clientWidth}`)
        setWidth(w);       
      }
-  }
+  };
 
   const mouseDown = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -68,10 +68,7 @@ const App = () =>{
     console.log(`mouse up x = ${e.clientX} width = ${ref2?.current?.clientWidth}`)
     stopDrag();
   }
-  const mouseMove = (e: React.MouseEvent<HTMLElement>) => {    
-    const pos = getMousePos(e.clientX, e.clientY);
-    dragging(pos);
-  }
+  
   const touchStart = (e: React.TouchEvent<HTMLElement>) => {
     e.preventDefault();
     const pos = getMousePos(e.touches[0].clientX, e.touches[0].clientY);
@@ -82,6 +79,12 @@ const App = () =>{
     e.preventDefault();    
     stopDrag();
   }
+
+  const mouseMove = (e: React.MouseEvent<HTMLElement>) => {    
+    const pos = getMousePos(e.clientX, e.clientY);
+    dragging(pos);
+  }
+
   const touchMove = (e: React.TouchEvent<HTMLElement>) => {
     const pos = getMousePos(e.touches[0].clientX, e.touches[0].clientY);
     dragging(pos);

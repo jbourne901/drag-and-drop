@@ -1,0 +1,24 @@
+.treeleaf {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    margin-left: -24px;
+    cursor: move;
+    border: 1px dotted lightseagreen;
+    padding: 4px;
+    border-radius: 4px;
+    min-width: fit-content;
+}
+
+.treeleaf:hover {
+    background: rgb(66,66,66);    
+    border: 1px dotted;
+}
+
+.treeleaf .MuiSvgIcon-root {
+    color: lightseagreen;
+    border: solid 1px lightseagreen;
+    border-radius: 30px;
+    padding: 4px;
+    
+}
